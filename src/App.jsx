@@ -89,10 +89,10 @@ function App() {
     setResetVersion(version => version + 1);
   }
 
-  const visibleProjects =
-    filter === "All"
-      ? projects
-      : projects.filter(project => project.status === filter);
+const visibleProjectsCount =
+  filter === "All"
+    ? projects.length
+    : projects.filter(project => project.status === filter).length;
 
   return (
     <div className="app">
@@ -119,7 +119,7 @@ function App() {
             <div>
               <h2>Projects</h2>
               <p>
-                Showing {visibleProjects.length} of {projects.length}
+                Showing {visibleProjectsCount} of {projects.length}
               </p>
             </div>
           </div>
@@ -132,16 +132,22 @@ function App() {
           />
 
           <div className="project-grid">
-            {visibleProjects.map(project => (
-              <ProjectCard
-                key={`${project.id}-${resetVersion}`}
-                project={project}
-                onDelete={deleteProject}
-                onStatusChange={changeStatus}
-                resetVersion={resetVersion}
-              />
-            ))}
-          </div>
+  {projects.map(project => {
+    const isVisible =
+      filter === "All" || project.status === filter;
+
+    return (
+      <ProjectCard
+        key={`${project.id}-${resetVersion}`}
+        project={project}
+        onDelete={deleteProject}
+        onStatusChange={changeStatus}
+        resetVersion={resetVersion}
+        isVisible={isVisible}
+      />
+    );
+  })}
+</div>
         </section>
       </main>
     </div>

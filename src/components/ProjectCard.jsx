@@ -1,12 +1,20 @@
 import { useState } from "react";
 
-function ProjectCard({ project, onDelete, onStatusChange, resetVersion }) {
+function ProjectCard({
+  project,
+  onDelete,
+  onStatusChange,
+  resetVersion,
+  isVisible
+}) {
   console.log("Render ProjectCard:", project.title);
 
   const [focusCount, setFocusCount] = useState(0);
 
   return (
-    <article className="project-card">
+    <article
+  className={`project-card ${isVisible ? "" : "project-card-hidden"}`}
+>
       <div className="project-card-header">
         <div>
           <p className="project-category">{project.category}</p>
